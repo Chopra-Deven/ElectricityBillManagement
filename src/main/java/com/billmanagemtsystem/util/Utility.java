@@ -4,11 +4,9 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
-import java.net.UnknownHostException;
 import java.time.LocalDate;
 import java.util.Formatter;
 
@@ -76,20 +74,20 @@ public class Utility
     public static JSONObject sendRequest(JSONObject request)
     {
 
-        JSONObject response = null;
+        JSONObject response = new JSONObject();
 
-        try(Socket client = new Socket(Constants.SERVER_ADDRESS, Constants.PORT); PrintWriter outputStream = new PrintWriter(client.getOutputStream(), true); BufferedReader inputStream = new BufferedReader(new InputStreamReader(client.getInputStream()));)
+        try (Socket client = new Socket(Constants.SERVER_ADDRESS, Constants.PORT); PrintWriter outputStream = new PrintWriter(client.getOutputStream(), true); BufferedReader inputStream = new BufferedReader(new InputStreamReader(client.getInputStream())))
         {
             outputStream.println(request);
 
             response = new JSONObject(inputStream.readLine());
+
         }
         catch (Exception e)
         {
-            if (response != null)
-
-                response.put("msg",e.getMessage());
+            response.put("msg", e.getMessage());
         }
+
 
         return response;
     }

@@ -65,7 +65,7 @@ public class AdminClient
                         if (message.equals(Message.RESPONSE_STATUS_OK.getConstant()))
                             System.out.println(Constants.LINE_SEPARATOR + "User Created");
                         else
-                            System.out.println(message);
+                            System.err.println("User Not Created!" + Constants.LINE_SEPARATOR);
 
                         break;
 

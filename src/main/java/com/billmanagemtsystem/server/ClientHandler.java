@@ -8,6 +8,7 @@ import com.billmanagemtsystem.util.Message;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
@@ -34,8 +35,12 @@ public class ClientHandler extends Thread
 
         PrintWriter outputStream = null;
 
-        try (BufferedReader inputStream = new BufferedReader(new InputStreamReader(client.getInputStream())))
+        BufferedReader inputStream = null;
+
+        try
         {
+
+            inputStream = new BufferedReader(new InputStreamReader(client.getInputStream()));
 
             outputStream = new PrintWriter(client.getOutputStream(), true);
 
@@ -245,6 +250,7 @@ public class ClientHandler extends Thread
 
                     System.out.println("is Exist : " + isExist);
 
+
                     if (isExist && !isPaid)
                     {
                         if (billService.update(billId) != null)
@@ -280,11 +286,32 @@ public class ClientHandler extends Thread
         }
         catch (Exception e)
         {
+
             response.put("msg", e.getMessage());
 
             if (outputStream != null)
 
                 outputStream.println(response);
+
+        }
+        finally
+        {
+            try
+            {
+                client.close();
+
+                if (inputStream != null)
+
+                    inputStream.close();
+
+                if (outputStream != null)
+                    outputStream.close();
+
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+            }
         }
 
 

@@ -41,7 +41,7 @@ public class CustomerRepository implements RepositoryService
     }
 
     @Override
-    public synchronized Object update(int id, Object obj)
+    public Object update(int id, Object obj)
     {
 
         return null;

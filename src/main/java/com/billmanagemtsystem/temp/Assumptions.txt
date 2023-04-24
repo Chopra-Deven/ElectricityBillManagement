@@ -1,0 +1,4 @@
+1. Enter Inputs in valid format.
+2. All customer have only one meter number assigned.
+3. Admin can create n number of bills for same meter ID.
+4. all request or operation is completing within a second.
